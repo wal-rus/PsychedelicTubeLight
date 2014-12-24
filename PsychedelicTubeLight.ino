@@ -180,7 +180,7 @@ const static int NUM_LIGHTERS = 6;
 const lightingFunction_t lighters[] = { &chasers, &opalSparkle, &opalSlow, &rainbowWaves, &rainbowPulse, &rainbowCycle };
 
 void setup() {
-  LEDS.addLeds<WS2811, DATA_PIN, BGR>(leds, NUM_LEDS);  
+  LEDS.addLeds<WS2811, DATA_PIN, GRB>(leds, NUM_LEDS);  
   //attachInterrupt(BUTTON_PIN, update, RISING);
 }
 
