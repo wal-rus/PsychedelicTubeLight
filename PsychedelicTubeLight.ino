@@ -155,22 +155,26 @@ void fadeWhite() {
 }
 
 void chasers() {
-  const int TRAIL_SIZE = 10;
+  const int TRAIL_SIZE = 30;
+  const int HUE = 80;
+  const int TRAIL_HUE = 150;
+  const int SATURATION = 255;
   
   for (uint8_t tip_pos = 0; tip_pos < NUM_LEDS; tip_pos++) {
     if (interrupt) {
       interrupt = !interrupt;
       return;
-    }    
-    
-    for(uint8_t trail_element = 0; trail_element <= TRAIL_SIZE; trail_element++) {
-      const uint8_t led_index = wrapLEDIndex(tip_pos-trail_element);
-      const uint8_t led_brightness = 255-(trail_element * (255/TRAIL_SIZE));
-      leds[led_index] = CRGB(led_brightness,0,0);
     }
-    leds[59] = CRGB(0,0,255);
-    FastLED.show();
-    delay(10);
+    
+    for(float delta = 0; delta <= 1.0f; delta += 0.07f) {
+      leds[tip_pos] = CHSV(HUE,SATURATION, delta*255);
+      for(uint8_t trail_element = 1; trail_element < TRAIL_SIZE; trail_element++) {
+        const uint8_t led_index = wrapLEDIndex(tip_pos-trail_element);
+        const float t = 1-((trail_element+delta) / static_cast<float>(TRAIL_SIZE));
+        leds[led_index] = CHSV(HUE*t + TRAIL_HUE*(1-t),SATURATION,t*255);
+      }
+      FastLED.show();
+    }
   }
 }
 
