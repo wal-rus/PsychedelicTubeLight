@@ -215,7 +215,7 @@ void update() {
   FastLED.show();
   delay(100);
   mode++;
-  mode %= 7;
+  mode %= NUM_LIGHTERS;
   interrupt = true;
 }
 
