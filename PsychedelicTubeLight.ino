@@ -13,10 +13,6 @@ CRGB leds[NUM_LEDS];
 volatile int mode = 0;
 volatile boolean interrupt = false;
 
-void setup() {
-  LEDS.addLeds<WS2811, DATA_PIN, GBR>(leds, NUM_LEDS);  
-  //attachInterrupt(BUTTON_PIN, update, RISING);
-}
 
 /*
  * Prismatic pulsing as if opal was liquid.
@@ -208,6 +204,11 @@ void fadeWhite() {
     FastLED.show();    
     delay(5);
   }
+}
+
+void setup() {
+  LEDS.addLeds<WS2811, DATA_PIN, BGR>(leds, NUM_LEDS);  
+  //attachInterrupt(BUTTON_PIN, update, RISING);
 }
 
 void update() {
